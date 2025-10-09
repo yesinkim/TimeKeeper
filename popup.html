@@ -7,15 +7,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --color-background: #313B43;
-      --color-header: #343A40;
-      --color-surface: #F8F9FA;
+      --color-background: #f5f6f8;
+      --color-header: #ffffff;
+      --color-header-text: #2C3E50;
+      --color-header-subtle-text: rgba(44, 62, 80, 0.65);
+      --color-header-muted-icon: rgba(44, 62, 80, 0.08);
+      --color-surface: #ffffff;
+      --color-surface-alt: #f8f9fa;
       --color-text: #2C3E50;
       --color-text-muted: #61707C;
       --color-accent: #E83941;
       --color-success: #4CAF50;
+      --color-status-badge-bg: rgba(76, 175, 80, 0.12);
+      --color-status-badge-text: #1f3625;
+      --color-status-dot: #4CAF50;
+      --color-divider: rgba(44, 62, 80, 0.08);
+      --color-guide-border: rgba(44, 62, 80, 0.08);
+      --color-guide-step-bg: rgba(232, 57, 65, 0.12);
+      --color-toggle-track: rgba(44, 62, 80, 0.18);
+      --color-toggle-slider: #ffffff;
+      --color-select-background: rgba(255, 255, 255, 0.9);
+      --color-select-border: rgba(44, 62, 80, 0.12);
+      --shadow-card: 0 16px 32px rgba(19, 27, 35, 0.12);
+      --shadow-surface: 0 16px 36px rgba(19, 27, 35, 0.08);
       --radius-card: 16px;
       --radius-control: 12px;
+    }
+
+    body[data-theme='dark'] {
+      --color-background: #313B43;
+      --color-header: #343A40;
+      --color-header-text: #F8F9FA;
+      --color-header-subtle-text: rgba(248, 249, 250, 0.75);
+      --color-header-muted-icon: rgba(248, 249, 250, 0.12);
+      --color-surface: #F8F9FA;
+      --color-surface-alt: rgba(248, 249, 250, 0.96);
+      --color-text: #2C3E50;
+      --color-text-muted: #61707C;
+      --color-status-badge-bg: rgba(76, 175, 80, 0.18);
+      --color-status-badge-text: #f5fdf5;
+      --color-divider: rgba(44, 62, 80, 0.12);
+      --color-guide-border: rgba(44, 62, 80, 0.1);
+      --color-guide-step-bg: rgba(232, 57, 65, 0.16);
+      --color-toggle-track: rgba(255, 255, 255, 0.35);
+      --color-select-background: rgba(255, 255, 255, 0.95);
+      --color-select-border: rgba(44, 62, 80, 0.16);
+      --shadow-card: 0 16px 32px rgba(10, 14, 20, 0.28);
+      --shadow-surface: 0 16px 36px rgba(10, 14, 20, 0.34);
     }
 
     * {
@@ -24,12 +62,13 @@
     }
     
     body {
-      background: #10161c;
+      background: var(--color-background);
       margin: 0;
       padding: 14px 16px 6px;
       display: flex;
       justify-content: center;
       color: var(--color-text);
+      transition: background 0.3s ease, color 0.3s ease;
     }
     
     .container {
@@ -44,10 +83,11 @@
       display: flex;
       flex-direction: column;
       background: transparent;
-      border-radius: 16px;
+      border-radius: var(--radius-card);
       border: none;
-      box-shadow: 0 16px 32px rgba(19, 27, 35, 0.2);
+      box-shadow: var(--shadow-card);
       overflow: hidden;
+      transition: box-shadow 0.3s ease;
     }
 
     .login-section {
@@ -60,12 +100,13 @@
 
     .header {
       background: var(--color-header);
-      color: #f5f6f8;
+      color: var(--color-header-text);
       padding: 22px 24px 36px;
-      border-radius: 16px 16px 0 0;
+      border-radius: var(--radius-card) var(--radius-card) 0 0;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .logo {
@@ -78,10 +119,11 @@
       width: 40px;
       height: 40px;
       border-radius: 14px;
-      background: rgba(245, 246, 248, 0.1);
+      background: var(--color-header-muted-icon);
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background 0.3s ease;
     }
 
     .logo-mark img {
@@ -107,37 +149,40 @@
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      color: rgba(245, 246, 248, 0.6);
+      color: var(--color-header-subtle-text);
+      transition: color 0.3s ease;
     }
 
     .subtitle {
       font-weight: 400;
       font-size: 12px;
       line-height: 1.6;
-      color: rgba(245, 246, 248, 0.8);
+      color: var(--color-header-subtle-text);
       max-width: 320px;
       margin-top: 6px;
+      transition: color 0.3s ease;
     }
 
     .status-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(76, 175, 80, 0.18);
-      color: #f5fdf5;
+      background: var(--color-status-badge-bg);
+      color: var(--color-status-badge-text);
       padding: 5px 12px;
       border-radius: 16px;
       font-size: 11px;
       font-weight: 600;
       align-self: flex-start;
       margin-top: 10px;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .status-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #aff1af;
+      background: var(--color-status-dot);
       animation: pulse 2s infinite;
     }
 
@@ -153,11 +198,12 @@
       display: flex;
       flex-direction: column;
       gap: 18px;
-      background: #ffffff;
+      background: var(--color-surface);
       border-radius: 18px 18px 14px 14px;
       border: none;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+      box-shadow: var(--shadow-surface);
       margin: -18px 0 10px;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
     }
 
     .login-section .content-area {
@@ -176,6 +222,13 @@
       flex-direction: column;
       gap: 10px;
       width: 100%;
+    }
+
+    .login-description {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: 12px;
+      line-height: 1.6;
     }
 
     .google-btn {
@@ -228,7 +281,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      border-bottom: 1px solid var(--color-divider);
     }
 
     .setting-item:last-child {
@@ -273,7 +326,7 @@
       position: relative;
       width: 40px;
       height: 22px;
-      background: #e0e0e0;
+      background: var(--color-toggle-track);
       border-radius: 11px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -291,7 +344,7 @@
       left: 2px;
       width: 14px;
       height: 14px;
-      background: white;
+      background: var(--color-toggle-slider);
       border-radius: 50%;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
@@ -309,8 +362,8 @@
     
     .language-select,
     .timezone-select {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: var(--color-select-background);
+      border: 1px solid var(--color-select-border);
       border-radius: 8px;
       padding: 6px 10px;
       font-size: 12px;
@@ -360,10 +413,10 @@
 
     .guide-section {
       padding: 16px;
-      background: var(--color-surface);
+      background: var(--color-surface-alt);
       border-radius: 14px;
-      border: 1px solid rgba(44, 62, 80, 0.04);
-      box-shadow: 0 8px 18px rgba(19, 27, 35, 0.07);
+      border: 1px solid var(--color-guide-border);
+      box-shadow: var(--shadow-surface);
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -393,7 +446,7 @@
       align-items: flex-start;
       gap: 12px;
       padding-bottom: 8px;
-      border-bottom: 1px solid rgba(44, 62, 80, 0.08);
+      border-bottom: 1px solid var(--color-guide-border);
     }
 
     .guide-step:last-child {
@@ -401,7 +454,7 @@
     }
     
     .step-number {
-      background: rgba(232, 57, 65, 0.16);
+      background: var(--color-guide-step-bg);
       color: var(--color-accent);
       width: 24px;
       height: 24px;
@@ -449,7 +502,7 @@
     .notification.is-info { background: rgba(33, 150, 243, 0.9); color: white; }
   </style>
 </head>
-<body>
+<body data-theme="light">
   <div class="container">
     <div class="main-card">
       <!-- 로그인 섹션 -->
@@ -524,8 +577,8 @@
                   <div class="setting-description" data-i18n="settingDarkModeDescription"></div>
                 </div>
                 <div class="toggle-container">
-                  <span id="themeLabel" class="toggle-label" data-i18n="toggleOff"></span>
-                  <div id="themeToggle" class="toggle-switch">
+                  <span id="darkModeLabel" class="toggle-label" data-i18n="toggleOff"></span>
+                  <div id="darkModeToggle" class="toggle-switch">
                     <div class="toggle-slider"></div>
                   </div>
                 </div>

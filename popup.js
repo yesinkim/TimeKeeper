@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
   async function applyI18n() {
     const settings = await getStoredSettings();
     const preferredLocale = settings.language || detectDefaultLanguage();
+    applyTheme(settings.darkMode === true);
 
     await ensureLocaleLoaded(fallbackLocale);
     await ensureLocaleLoaded(preferredLocale);
@@ -72,13 +73,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 토글 라벨 등 동적으로 변경되는 요소들도 현재 언어로 갱신
     if (sourceToggle && sourceLabel) {
-      updateToggleUI(sourceToggle, sourceLabel, sourceToggle.classList.contains('active'));
+      const showSourceInfo = settings.showSourceInfo !== false;
+      updateToggleUI(sourceToggle, sourceLabel, showSourceInfo);
     }
     if (autoDetectToggle && autoDetectLabel) {
-      updateToggleUI(autoDetectToggle, autoDetectLabel, autoDetectToggle.classList.contains('active'));
+      const autoDetectEnabled = settings.autoDetectEnabled !== false;
+      updateToggleUI(autoDetectToggle, autoDetectLabel, autoDetectEnabled);
     }
     if (darkModeToggle && darkModeLabel) {
-      updateToggleUI(darkModeToggle, darkModeLabel, darkModeToggle.classList.contains('active'));
+      updateToggleUI(darkModeToggle, darkModeLabel, settings.darkMode === true);
     }
   }
 
@@ -148,8 +151,9 @@ document.addEventListener('DOMContentLoaded', function() {
       updateToggleUI(autoDetectToggle, autoDetectLabel, autoDetectEnabled);
       
       // 다크 모드 설정
-      const darkMode = settings.darkMode || false;
+      const darkMode = settings.darkMode === true;
       updateToggleUI(darkModeToggle, darkModeLabel, darkMode);
+      applyTheme(darkMode);
       
       // 언어 설정
       if (languageSelect) {
@@ -225,9 +229,17 @@ document.addEventListener('DOMContentLoaded', function() {
       chrome.storage.sync.set({ settings: settings });
       
       updateToggleUI(darkModeToggle, darkModeLabel, newValue);
+      applyTheme(newValue);
       const messageId = newValue ? 'notifyDarkModeEnabled' : 'notifyDarkModeDisabled';
       showNotification(getMessage(messageId), 'success');
     });
+  }
+  
+  function applyTheme(isDarkMode) {
+    const theme = isDarkMode ? 'dark' : 'light';
+    if (document.body) {
+      document.body.setAttribute('data-theme', theme);
+    }
   }
   
   function updateLanguage() {
